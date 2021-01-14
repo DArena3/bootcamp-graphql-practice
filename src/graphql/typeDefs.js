@@ -2,9 +2,10 @@ const { gql } = require('apollo-server-express')
 
 module.exports = gql`
   type Query {
-    authors: [Author!]!
+    allAuthors: [Author!]!
     author(id: ID!): Author!
-    books: [Book!]!
+    allBooks: [Book!]!
+    authorBooks: [Book!]!
     bestsellers: [Book!]!
     book(id: ID!): Book!
     authorAddress(id: ID!): Address!
@@ -48,8 +49,6 @@ module.exports = gql`
     numPages: Int,
     datePublished: Date,
     bestseller:  Boolean,
-    author: Author,
-    publisher: Publisher,
   }
 
   type Author {
@@ -60,6 +59,7 @@ module.exports = gql`
     email: String,
     numBooksPublished: Int,
     address: Address,
+    books: [Book!]!,
   }
 
   input AuthorInput {
@@ -68,7 +68,6 @@ module.exports = gql`
     age: Int,
     email: String,
     numBooksPublished: Int,
-    address: Address,
   }
 
   type Publisher {
@@ -77,13 +76,13 @@ module.exports = gql`
     phoneNumber: String,
     numBooksPublished: Int,
     address: Address,
+    books:[Book!]!,
   }
 
   input PublisherInput {
     company: String!,
     phoneNumber: String,
     numBooksPublished: Int,
-    address: Address,
   }
 
   scalar Date
